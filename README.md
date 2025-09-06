@@ -155,28 +155,6 @@ The system uses PostgreSQL with the pgVector extension. The Docker Compose file 
 - User 'postgres' with password 'postgres'
 - Port 5432 exposed to the host
 
-## Troubleshooting
-
-### Database Connection Issues
-
-If you encounter database connection issues:
-1. Ensure Docker is running
-2. Check that the database container is healthy: `docker-compose ps`
-3. Verify the `DATABASE_URL` in your `.env` file
-
-### API Key Issues
-
-If you encounter API key issues:
-1. Verify your Google API key is correct
-2. Ensure the API key has the necessary permissions for the Gemini API
-
-### PDF Ingestion Issues
-
-If PDF ingestion fails:
-1. Verify the PDF file exists at the specified path
-2. Check that the PDF is not corrupted
-3. Ensure you have read permissions for the PDF file
-
 ## License
 
 This project is for educational purposes.
