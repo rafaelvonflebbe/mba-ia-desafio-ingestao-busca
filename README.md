@@ -58,7 +58,7 @@ PDF_PATH=document.pdf
 Start the PostgreSQL database with pgVector using Docker Compose:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Wait for the database to be ready (this may take a few moments).
