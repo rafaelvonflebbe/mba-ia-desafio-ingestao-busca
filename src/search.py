@@ -1,10 +1,10 @@
 import os
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_postgres import PGVector
 from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
 
 load_dotenv()
 
@@ -128,11 +128,12 @@ def search_prompt(question=None):
         temperature=0.1
     )
     
-    # Create chain
-    chain = LLMChain(
-        llm=llm,
-        prompt=prompt,
-        verbose=True
+    # Create chain using modern RunnableSequence approach
+    chain = (
+        RunnablePassthrough.assign(context=lambda x: x["contexto"])
+        | prompt
+        | llm
+        | StrOutputParser()
     )
     
     # Return chain with formatted context
@@ -156,12 +157,12 @@ def answer_question(question):
     chain, formatted_context, question = chain_result
     
     try:
-        # Get answer from LLM
-        response = chain.run(
-            contexto=formatted_context,
-            pergunta=question
-        )
-        return response
+        # Get answer from LLM using invoke instead of deprecated run method
+        response = chain.invoke({
+            "contexto": formatted_context,
+            "pergunta": question
+        })
+        return response.get('text', str(response)) if isinstance(response, dict) else str(response)
     except Exception as e:
         print(f"Error getting answer: {e}")
         return "Ocorreu um erro ao processar sua pergunta."
