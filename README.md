@@ -58,12 +58,24 @@ PDF_PATH=document.pdf
 Start the PostgreSQL database with pgVector using Docker Compose:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Wait for the database to be ready (this may take a few moments).
 
-### 4. Install Dependencies
+### 4. Create and Activate Virtual Environment
+
+Create a Python virtual environment to isolate dependencies:
+
+```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate
+```
+
+### 5. Install Dependencies
 
 Install the required Python packages:
 
@@ -71,7 +83,7 @@ Install the required Python packages:
 pip install -r requirements.txt
 ```
 
-### 5. Ingest the PDF Document
+### 6. Ingest the PDF Document
 
 Ingest the PDF document into the vector database:
 
@@ -98,13 +110,15 @@ python src/chat.py
 ### Example Usage
 
 ```
+
 === Sistema de Busca Semântica ===
 Digite 'sair' para encerrar o chat.
 
-Você: Qual o faturamento da Empresa SuperTechIABrazil?
+Você: Qual o faturamento da Empresa Suprema Serviços LTDA?
 Processando sua pergunta...
 
 Resposta:
+
 --------------------------------------------------
 O faturamento foi de 10 milhões de reais.
 --------------------------------------------------
